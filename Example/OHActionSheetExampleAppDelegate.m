@@ -1,17 +1,21 @@
-## About this class
+//
+//  AlertsExExampleAppDelegate.m
+//  AlertsExExample
+//
+//  Created by Olivier on 31/01/11.
+//  Copyright 2011 AliSoftware. All rights reserved.
+//
 
-This class make it easier to use `UIActionSheet` with blocks.
+#import "OHActionSheetExampleAppDelegate.h"
+#import "OHActionSheet.h"
 
-This allows you to provide directly the code to execute (as a block) in return to the tap on a button,
-instead of declaring a delegate and implementing the corresponding methods.
 
-This also has the huge advantage of **simplifying the code especially when using multiple `UIActionSheet`** in the same object (as in such case, it is not easy to have a clean code if you share the same delegate)
+@implementation OHActionSheetExampleAppDelegate
 
-_Note: You may also be interested in [OHAlertView](https://github.com/AliSoftware/OHAlertView)_
 
-## Usage Example
-
-    NSArray* flavours = [NSArray arrayWithObjects:@"chocolate",@"vanilla",@"strawberry",nil];
+-(IBAction)showSheet1
+{
+	NSArray* flavours = [NSArray arrayWithObjects:@"chocolate",@"vanilla",@"strawberry",nil];
 	
 	[OHActionSheet showSheetInView:self.window
 							   title:@"Ice cream?"
@@ -30,13 +34,11 @@ _Note: You may also be interested in [OHAlertView](https://github.com/AliSoftwar
 			 self.status.text = [NSString stringWithFormat:@"You ordered a %@ ice cream.",flavour];
 		 }
 	 }];
-     
-## ActionSheets with timeout
+}
 
-You can also use this class to generate an ActionSheet that will be dismissed after a given time.
-_(You can even add a dynamic text on your sheet to display the live countdown)_
-
-    NSArray* flavours = [NSArray arrayWithObjects:@"apple",@"pear",@"banana",nil];
+-(IBAction)showSheet2
+{
+	NSArray* flavours = [NSArray arrayWithObjects:@"apple",@"pear",@"banana",nil];
 
 	[[[OHActionSheet alloc] initWithTitle:@"What's your favorite fruit?"
                  cancelButtonTitle:@"Don't care"
@@ -54,16 +56,19 @@ _(You can even add a dynamic text on your sheet to display the live countdown)_
 			 self.status.text = [NSString stringWithFormat:@"Your favorite fruit is %@.",fruit];
 		 }
 	 }] showInView:self.window withTimeout:8 timeoutButtonIndex:-1];
+}
 
-## Compatibility Notes
 
-* This class uses blocks, which is a feature introduced in iOS 4.0.
-* This class is compatible with both ARC and non-ARC projects.
 
-## License
+/////////////////////////////////////////////////////////////////////////////
+// MARK: -
+// MARK: App LifeCycle
+/////////////////////////////////////////////////////////////////////////////
 
-This code is under MIT License.
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
+    // Override point for customization after application launch.
+    [self.window makeKeyAndVisible];
+    return YES;
+}
 
-## CocoaPods
-
-This class is referenced in CocoaPods, so you can simply add `pod OHActionSheet` to your Podfile to add it to your pods.
+@end
