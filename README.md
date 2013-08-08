@@ -5,7 +5,7 @@ This class make it easier to use `UIActionSheet` with blocks.
 This allows you to provide directly the code to execute (as a block) in return to the tap on a button,
 instead of declaring a delegate and implementing the corresponding methods.
 
-This also has the huge advantage of **simplifying the code especially when using multiple `UIActionSheet`** in the same object (as in such case, it is not easy to have a clean code if you share the same delegate)
+This also has the huge advantage of **simplifying the code especially when using multiple `UIActionSheets`** in the same object (as in such case, it is not easy to have a clean code if you share the same delegate)
 
 _Note: You may also be interested in [OHAlertView](https://github.com/AliSoftware/OHAlertView)_
 
