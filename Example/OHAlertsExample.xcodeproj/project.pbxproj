@@ -68,7 +68,7 @@
 				09530E8312F74FE400A2753C /* OHActionSheet.m */,
 			);
 			name = OHActionSheet;
-			path = ..;
+			path = ../OHActionSheet;
 			sourceTree = "<group>";
 		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
