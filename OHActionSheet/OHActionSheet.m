@@ -19,20 +19,20 @@
 #pragma mark - Constructors
 
 +(void)showSheetInView:(UIView*)view
-				 title:(NSString*)title
-	 cancelButtonTitle:(NSString *)cancelButtonTitle
+                 title:(NSString*)title
+     cancelButtonTitle:(NSString *)cancelButtonTitle
 destructiveButtonTitle:(NSString *)destructiveButtonTitle
-	 otherButtonTitles:(NSArray *)otherButtonTitles
-			completion:(OHActionSheetButtonHandler)completionBlock
+     otherButtonTitles:(NSArray *)otherButtonTitles
+            completion:(OHActionSheetButtonHandler)completionBlock
 {
-	OHActionSheet* sheet = [[self alloc] initWithTitle:title
+    OHActionSheet* sheet = [[self alloc] initWithTitle:title
                                      cancelButtonTitle:cancelButtonTitle
                                 destructiveButtonTitle:destructiveButtonTitle
                                      otherButtonTitles:otherButtonTitles
                                             completion:completionBlock];
     [sheet showInView:view];
 #if ! __has_feature(objc_arc)
-	[sheet autorelease];
+    [sheet autorelease];
 #endif
 }
 
@@ -40,36 +40,36 @@ destructiveButtonTitle:(NSString *)destructiveButtonTitle
   cancelButtonTitle:(NSString *)cancelButtonTitle
 destructiveButtonTitle:(NSString *)destructiveButtonTitle
   otherButtonTitles:(NSArray *)otherButtonTitles
-		 completion:(OHActionSheetButtonHandler)completionBlock;
+         completion:(OHActionSheetButtonHandler)completionBlock;
 {
-	// Note: need to send at least the first button because if the otherButtonTitles parameter is nil, self.firstOtherButtonIndex will be -1
-	NSString* firstOther = (otherButtonTitles && ([otherButtonTitles count]>0)) ? [otherButtonTitles objectAtIndex:0] : nil;
-	self = [super initWithTitle:title delegate:self
-			  cancelButtonTitle:nil
-		 destructiveButtonTitle:destructiveButtonTitle
-			  otherButtonTitles:firstOther,nil];
-	if (self != nil) {
-		for(NSInteger idx = 1; idx<[otherButtonTitles count];++idx) {
-			[self addButtonWithTitle: [otherButtonTitles objectAtIndex:idx] ];
-		}
+    // Note: need to send at least the first button because if the otherButtonTitles parameter is nil, self.firstOtherButtonIndex will be -1
+    NSString* firstOther = (otherButtonTitles && ([otherButtonTitles count]>0)) ? [otherButtonTitles objectAtIndex:0] : nil;
+    self = [super initWithTitle:title delegate:self
+              cancelButtonTitle:nil
+         destructiveButtonTitle:destructiveButtonTitle
+              otherButtonTitles:firstOther,nil];
+    if (self != nil) {
+        for(NSInteger idx = 1; idx<[otherButtonTitles count];++idx) {
+            [self addButtonWithTitle: [otherButtonTitles objectAtIndex:idx] ];
+        }
         
         // added this because sometimes an actionSheet was being created with an empty cancel button
         if (cancelButtonTitle) {
             [self addButtonWithTitle:cancelButtonTitle];
             self.cancelButtonIndex = self.numberOfButtons - 1;
         }
-		
-		self.buttonHandler = completionBlock;
-	}
-	return self;
+        
+        self.buttonHandler = completionBlock;
+    }
+    return self;
 }
 
 
 -(void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-	if (self.buttonHandler) {
-		self.buttonHandler(self,buttonIndex);
-	}
+    if (self.buttonHandler) {
+        self.buttonHandler(self,buttonIndex);
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -78,12 +78,12 @@ destructiveButtonTitle:(NSString *)destructiveButtonTitle
 -(void)showInView:(UIView *)view
 {
     if ([view isKindOfClass:[UITabBar class]]) {
-		[self showFromTabBar:(UITabBar*)view];
-	} else if ([view isKindOfClass:[UIToolbar class]]) {
-		[self showFromToolbar:(UIToolbar*)view];
-	} else {
-		[super showInView:view];
-	}
+        [self showFromTabBar:(UITabBar*)view];
+    } else if ([view isKindOfClass:[UIToolbar class]]) {
+        [self showFromToolbar:(UIToolbar*)view];
+    } else {
+        [super showInView:view];
+    }
 }
 
 -(void)showInView:(UIView*)view withTimeout:(unsigned long)timeoutInSeconds timeoutButtonIndex:(NSInteger)timeoutButtonIndex
@@ -135,7 +135,7 @@ timeoutButtonIndex:(NSInteger)timeoutButtonIndex timeoutMessageFormat:(NSString*
     
     // Show the alert and start the timer now
     [self showInView:view];
-
+    
     dispatch_resume(timer);
 }
 
@@ -146,7 +146,7 @@ timeoutButtonIndex:(NSInteger)timeoutButtonIndex timeoutMessageFormat:(NSString*
 
 #if ! __has_feature(objc_arc)
 - (void)dealloc {
-	[_buttonHandler release];
+    [_buttonHandler release];
     [super dealloc];
 }
 #endif
