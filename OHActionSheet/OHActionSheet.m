@@ -52,8 +52,12 @@ destructiveButtonTitle:(NSString *)destructiveButtonTitle
 		for(NSInteger idx = 1; idx<[otherButtonTitles count];++idx) {
 			[self addButtonWithTitle: [otherButtonTitles objectAtIndex:idx] ];
 		}
-		[self addButtonWithTitle:cancelButtonTitle];
-		self.cancelButtonIndex = self.numberOfButtons - 1;
+        
+        // added this because sometimes an actionSheet was being created with an empty cancel button
+        if (cancelButtonTitle) {
+            [self addButtonWithTitle:cancelButtonTitle];
+            self.cancelButtonIndex = self.numberOfButtons - 1;
+        }
 		
 		self.buttonHandler = completionBlock;
 	}
