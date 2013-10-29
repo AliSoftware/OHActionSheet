@@ -22,6 +22,13 @@ destructiveButtonTitle:(NSString *)destructiveButtonTitle
 	 otherButtonTitles:(NSArray *)otherButtonTitles
 			completion:(OHActionSheetButtonHandler)completionBlock;
 
++(OHActionSheet *)showFromBarButtonItem:(UIBarButtonItem *)barButton
+				 title:(NSString*)title
+	 cancelButtonTitle:(NSString *)cancelButtonTitle
+destructiveButtonTitle:(NSString *)destructiveButtonTitle
+	 otherButtonTitles:(NSArray *)otherButtonTitles
+			completion:(OHActionSheetButtonHandler)completionBlock;
+			
 - (id)initWithTitle:(NSString*)title
   cancelButtonTitle:(NSString *)cancelButtonTitle
 destructiveButtonTitle:(NSString *)destructiveButtonTitle
