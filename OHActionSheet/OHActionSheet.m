@@ -45,7 +45,7 @@ destructiveButtonTitle:(NSString *)destructiveButtonTitle
 	// Note: need to send at least the first button because if the otherButtonTitles parameter is nil, self.firstOtherButtonIndex will be -1
 	NSString* firstOther = (otherButtonTitles && ([otherButtonTitles count]>0)) ? [otherButtonTitles objectAtIndex:0] : nil;
 	self = [super initWithTitle:title delegate:self
-			  cancelButtonTitle:nil
+			  cancelButtonTitle:cancelButtonTitle
 		 destructiveButtonTitle:destructiveButtonTitle
 			  otherButtonTitles:firstOther,nil];
 	if (self != nil) {
@@ -138,6 +138,30 @@ timeoutButtonIndex:(NSInteger)timeoutButtonIndex timeoutMessageFormat:(NSString*
 
     dispatch_resume(timer);
 }
+
+
++(OHActionSheet *)showFromBarButtonItem:(UIBarButtonItem *)barButton
+		  		  title:(NSString*)title
+	              cancelButtonTitle:(NSString *)cancelButtonTitle
+                 destructiveButtonTitle:(NSString *)destructiveButtonTitle
+	              otherButtonTitles:(NSArray *)otherButtonTitles
+		             completion:(OHActionSheetButtonHandler)completionBlock
+{
+	OHActionSheet* sheet = [[self alloc] initWithTitle:title
+                                     cancelButtonTitle:cancelButtonTitle
+                                destructiveButtonTitle:destructiveButtonTitle
+                                     otherButtonTitles:otherButtonTitles
+                                            completion:completionBlock];
+  //  sheet.bounds = CGRectMake(0,0,300,300);
+    [sheet showFromBarButtonItem:barButton animated:YES];
+
+#if ! __has_feature(objc_arc)
+	[sheet autorelease];
+#endif
+
+    return sheet;
+}
+
 
 
 /////////////////////////////////////////////////////////////////////////////
