@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.platform = :ios, '4.0'
   s.name         = "OHActionSheet"
-  s.version      = "1.0.2"
+  s.version      = "1.0.3"
   s.summary      = "UIActionSheet subclass that uses blocks to handle its callback (which make the code much more easier and readable)."
   s.description  = <<-DESC
                     UIActionSheet subclass that uses blocks to handle the code to execute after the user tapped a button.
@@ -20,4 +20,5 @@ Pod::Spec.new do |s|
   s.source_files = "OHActionSheet/*.{m,h}"
   s.public_header_files = "OHActionSheet/*.h"
   s.frameworks = 'Foundation', 'UIKit'
+  s.requires_arc = true
 end
