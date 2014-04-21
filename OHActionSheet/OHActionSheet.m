@@ -81,6 +81,8 @@ destructiveButtonTitle:(NSString *)destructiveButtonTitle
         [self showFromTabBar:(UITabBar*)view];
     } else if ([view isKindOfClass:[UIToolbar class]]) {
         [self showFromToolbar:(UIToolbar*)view];
+    } else if ([view isKindOfClass:[UIBarButtonItem class]]) {
+        [self showFromBarButtonItem:(UIBarButtonItem *)view animated:YES];
     } else {
         [super showInView:view];
     }
