@@ -18,19 +18,19 @@
 /////////////////////////////////////////////////////////////////////////////
 #pragma mark - Constructors
 
-+(void)showSheetInView:(UIView*)view
-                 title:(NSString*)title
-     cancelButtonTitle:(NSString *)cancelButtonTitle
++(void)showFromView:(UIView*)view
+              title:(NSString*)title
+  cancelButtonTitle:(NSString *)cancelButtonTitle
 destructiveButtonTitle:(NSString *)destructiveButtonTitle
-     otherButtonTitles:(NSArray *)otherButtonTitles
-            completion:(OHActionSheetButtonHandler)completionBlock
+  otherButtonTitles:(NSArray *)otherButtonTitles
+         completion:(OHActionSheetButtonHandler)completionBlock
 {
     OHActionSheet* sheet = [[self alloc] initWithTitle:title
                                      cancelButtonTitle:cancelButtonTitle
                                 destructiveButtonTitle:destructiveButtonTitle
                                      otherButtonTitles:otherButtonTitles
                                             completion:completionBlock];
-    [sheet showInView:view];
+    [sheet showFromView:view];
 #if ! __has_feature(objc_arc)
     [sheet autorelease];
 #endif
@@ -69,13 +69,17 @@ destructiveButtonTitle:(NSString *)destructiveButtonTitle
 {
     if (self.buttonHandler) {
         self.buttonHandler(self,buttonIndex);
+#if ! __has_feature(objc_arc)
+        [_buttonHandler release]
+#endif
+        self.buttonHandler = nil;
     }
 }
 
 /////////////////////////////////////////////////////////////////////////////
 #pragma mark - Public Methods
 
--(void)showInView:(UIView *)view
+-(void)showFromView:(UIView *)view
 {
     if ([view isKindOfClass:[UITabBar class]]) {
         [self showFromTabBar:(UITabBar*)view];
@@ -84,33 +88,34 @@ destructiveButtonTitle:(NSString *)destructiveButtonTitle
     } else if ([view isKindOfClass:[UIBarButtonItem class]]) {
         [self showFromBarButtonItem:(UIBarButtonItem *)view animated:YES];
     } else {
-        [super showInView:view];
+        [super showFromRect:view.frame inView:view.superview animated:YES];
     }
 }
 
--(void)showInView:(UIView*)view withTimeout:(unsigned long)timeoutInSeconds timeoutButtonIndex:(NSInteger)timeoutButtonIndex
+-(void)showFromView:(UIView*)view withTimeout:(unsigned long)timeoutInSeconds timeoutButtonIndex:(NSInteger)timeoutButtonIndex
 {
-    [self showInView:view withTimeout:timeoutInSeconds timeoutButtonIndex:timeoutButtonIndex timeoutMessageFormat:@"(Dismissed in %lus)"];
+    [self showFromView:view withTimeout:timeoutInSeconds timeoutButtonIndex:timeoutButtonIndex timeoutMessageFormat:@"(Dismissed in %lus)"];
 }
 
--(void)showInView:(UIView*)view withTimeout:(unsigned long)timeoutInSeconds
+-(void)showFromView:(UIView*)view withTimeout:(unsigned long)timeoutInSeconds
 timeoutButtonIndex:(NSInteger)timeoutButtonIndex timeoutMessageFormat:(NSString*)countDownMessageFormat
 {
     __block dispatch_source_t timer = nil;
-    __block unsigned long countDown = timeoutInSeconds;
+    __block long countDown = (signed long)timeoutInSeconds;
     
     // Add some timer sugar to the completion handler
-    OHActionSheetButtonHandler finalHandler = [self.buttonHandler copy];
-    self.buttonHandler = ^(OHActionSheet* bhSheet, NSInteger bhButtonIndex)
-    {
-        // Cancel and release timer
+    dispatch_block_t cancelTimer = ^{
+        if (!timer) return;
         dispatch_source_cancel(timer);
 #if ! __has_feature(objc_arc)
         dispatch_release(timer);
 #endif
         timer = nil;
-        
-        // Execute final handler
+    };
+    OHActionSheetButtonHandler finalHandler = [self.buttonHandler copy];
+    self.buttonHandler = ^(OHActionSheet* bhSheet, NSInteger bhButtonIndex)
+    {
+        cancelTimer();
         finalHandler(bhSheet, bhButtonIndex);
     };
 #if ! __has_feature(objc_arc)
@@ -132,11 +137,12 @@ timeoutButtonIndex:(NSInteger)timeoutButtonIndex timeoutMessageFormat:(NSString*
         if (countDown <= 0)
         {
             [self dismissWithClickedButtonIndex:timeoutButtonIndex animated:YES];
+            cancelTimer();
         }
     });
     
     // Show the alert and start the timer now
-    [self showInView:view];
+    [self showFromView:view];
     
     dispatch_resume(timer);
 }

@@ -16,34 +16,34 @@
 @implementation MainViewController
 
 
--(IBAction)showSheet1
+-(IBAction)showSheet1:(UIButton*)sender
 {
 	NSArray* flavours = [NSArray arrayWithObjects:@"chocolate",@"vanilla",@"strawberry",nil];
 	
-	[OHActionSheet showSheetInView:self.view
-                             title:@"Ice cream?"
-                 cancelButtonTitle:@"Maybe later"
-            destructiveButtonTitle:@"No thanks!"
-                 otherButtonTitles:flavours
-                        completion:^(OHActionSheet *sheet, NSInteger buttonIndex)
-	 {
-		 NSLog(@"button tapped: %ld", (long)buttonIndex);
-		 if (buttonIndex == sheet.cancelButtonIndex) {
-			 self.status.text = @"Your order has been postponed";
-		 }
+    [OHActionSheet showFromView:sender
+                          title:@"Ice cream?"
+              cancelButtonTitle:@"Maybe later"
+         destructiveButtonTitle:@"No thanks!"
+              otherButtonTitles:flavours
+                     completion:^(OHActionSheet *sheet, NSInteger buttonIndex)
+     {
+         NSLog(@"button tapped: %ld", (long)buttonIndex);
+         if (buttonIndex == sheet.cancelButtonIndex) {
+             self.status.text = @"Your order has been postponed";
+         }
          else if (buttonIndex == sheet.destructiveButtonIndex)
          {
-			 self.status.text = @"Your order has been cancelled";
-		 }
+             self.status.text = @"Your order has been cancelled";
+         }
          else
          {
-			 NSString* flavour = [flavours objectAtIndex:(buttonIndex-sheet.firstOtherButtonIndex)];
-			 self.status.text = [NSString stringWithFormat:@"You ordered a %@ ice cream.",flavour];
-		 }
-	 }];
+             NSString* flavour = [flavours objectAtIndex:(buttonIndex-sheet.firstOtherButtonIndex)];
+             self.status.text = [NSString stringWithFormat:@"You ordered a %@ ice cream.",flavour];
+         }
+     }];
 }
 
--(IBAction)showSheet2
+-(IBAction)showSheet2:(UIButton*)sender
 {
 	NSArray* flavours = [NSArray arrayWithObjects:@"apple",@"pear",@"banana",nil];
     
@@ -66,17 +66,17 @@
               NSString* fruit = [flavours objectAtIndex:(buttonIndex-sheet.firstOtherButtonIndex)];
               self.status.text = [NSString stringWithFormat:@"Your favorite fruit is %@.",fruit];
           }
-      }] showInView:self.view withTimeout:8 timeoutButtonIndex:-1];
+      }] showFromView:sender withTimeout:8 timeoutButtonIndex:-1];
 }
 
 - (IBAction)showSheet3:(UIBarButtonItem *)sender
 {
-    [OHActionSheet showSheetInView:(id)sender
-                             title:@"Sheet from Bar"
-                 cancelButtonTitle:@"Cancel"
-            destructiveButtonTitle:@"Delete"
-                 otherButtonTitles:@[@"Save"]
-                        completion:^(OHActionSheet *sheet, NSInteger buttonIndex)
+    [OHActionSheet showFromView:(id)sender
+                          title:@"Sheet from Bar"
+              cancelButtonTitle:@"Cancel"
+         destructiveButtonTitle:@"Delete"
+              otherButtonTitles:@[@"Save"]
+                     completion:^(OHActionSheet *sheet, NSInteger buttonIndex)
      {
          NSLog(@"Button tapped: %ld", (long)buttonIndex);
          if (buttonIndex == sheet.cancelButtonIndex)

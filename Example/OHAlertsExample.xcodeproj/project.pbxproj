@@ -23,7 +23,7 @@
 /* Begin PBXFileReference section */
 		09530E8212F74FE400A2753C /* OHActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OHActionSheet.h; sourceTree = "<group>"; };
 		09530E8312F74FE400A2753C /* OHActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OHActionSheet.m; sourceTree = "<group>"; };
-		0986D90619644A2C00C38DF8 /* MainViewController-iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "MainViewController-iPad.xib"; path = "iPad/MainViewController-iPad.xib"; sourceTree = "<group>"; };
+		0986D90619644A2C00C38DF8 /* MainViewController-iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "MainViewController-iPad.xib"; sourceTree = "<group>"; };
 		098E5D6B12F770D9003645FE /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = SOURCE_ROOT; };
 		098E5D6C12F770D9003645FE /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = SOURCE_ROOT; };
 		09D8119119644BDA00D0E228 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };

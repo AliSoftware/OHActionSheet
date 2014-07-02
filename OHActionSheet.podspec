@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.platform = :ios, '4.0'
   s.name         = "OHActionSheet"
-  s.version      = "1.0.3"
+  s.version      = "2.0.0"
   s.summary      = "UIActionSheet subclass that uses blocks to handle its callback (which make the code much more easier and readable)."
   s.description  = <<-DESC
                     UIActionSheet subclass that uses blocks to handle the code to execute after the user tapped a button.
