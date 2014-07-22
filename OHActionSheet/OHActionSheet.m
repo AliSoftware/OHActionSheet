@@ -70,7 +70,7 @@ destructiveButtonTitle:(NSString *)destructiveButtonTitle
     if (self.buttonHandler) {
         self.buttonHandler(self,buttonIndex);
 #if ! __has_feature(objc_arc)
-        [_buttonHandler release]
+        [_buttonHandler release];
 #endif
         self.buttonHandler = nil;
     }
